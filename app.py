@@ -11,7 +11,7 @@ def hi():                       # function given a name, which is used to genera
 @app.route('/index')
 def index():
     title = "new title"
-    names = ['alice', 'jessica', 'katie']
+    names = ['alice', 'iris', 'katie']
     return render_template('index.html', title=title, names=names)     # pass context from controller app to template html page KWARG
 
 @app.route('/students', methods = ['POST', 'GET'])

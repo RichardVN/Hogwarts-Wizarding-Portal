@@ -25,12 +25,12 @@
     {% block navbar %}
     <div class="topnav">
         <ul>
-            <a href="/index">TestIndex</a>
-            <a href="/students">Students</a>
-            <a href="/houses">Houses</a>
-            <a href="/professors">Professors</a>
-            <a href="/classes">Classes</a>
-            <a href="/registrations">Registrations</a>
+            <a href={{url_for('index')}}>TestIndex</a>
+            <a href={{url_for('show_students')}}>Students</a>
+            <a href={{url_for('show_houses')}}>Houses</a>
+            <a href={{url_for('show_professors')}}>Professors</a>
+            <a href={{url_for('show_classes')}}>Classes</a>
+            <a href={{url_for('show_registrations')}}>Registrations</a>
         </ul>
     </div>
     {% endblock %}
