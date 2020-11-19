@@ -8,3 +8,22 @@ app = Flask(__name__)       # argument is name of the app's module. We use __nam
 def hi():                       # function given a name, which is used to generate URLs for that function
     return ("Hello World!!")    # return ("string")  OR render_template("page.html"), belonging in templates folder
 
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/houses', methods = ['POST', 'GET'])
+def show_houses():
+    return render_template('houses.html')
+
+@app.route('/professors', methods = ['POST', 'GET'])
+def show_professors():
+    return render_template('professors.html')
+
+@app.route('/classes', methods = ['POST', 'GET'])
+def show_classes():
+    return render_template('classes.html')
+
+@app.route('/registrations', methods = ['POST','GET'])
+def show_registrations():
+    return render_template('registrations.html')
