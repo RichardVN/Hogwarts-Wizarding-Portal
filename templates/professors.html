@@ -1,134 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %} Professors Page {% endblock %}
+{% block pageheader %}Hogwarts Professors{% endblock %}
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Professors Page</title>
+{% block content %}
 
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-         <a href="/index">Students</a>
-         <a href="/houses">Houses</a>
-         <a href="/professors">Professors</a>
-         <a href="/classes">Classes</a>
-         <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Hogwarts Professors</center></strong></h1>
-</head>
-<body>
-   <form action = '/Professors' method = "post" class = addform>
+<form action='/Professors' method="post" class=addform>
+   <fieldset>
+      <legend>Add New Professor Entry</legend>
+
       <fieldset>
-         <legend>Add New Professor Entry</legend>
-   
-         <fieldset>
-            <label>*First Name:
-               <input type="text" name="first_name_input" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
+         <label>*First Name:
+            <input type="text" name="first_name_input" size="30" maxlength="100" required>
+         </label>
          <br />
-   
-         <fieldset>
-            <label>*Last Name:
-               <input type="text" name="last_name_input" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
-         <br />
-
-         <fieldset>
-              <label for="house_input">House:</label>
-              <select id="house_input" name="house_input" required>
-               <option value="None">No House</option>
-                <option value="Gryffindor">Gryffindor</option>
-                <option value="Slytherin">Slytherin</option>
-                <option value="Ravenclaw">Ravenclaw</option>
-                <option value="Hufflepuff">Hufflepuff</option>
-              </select>
-         </fieldset>
-         <p> <i>* Indicates a Required Field </i> </p>
-         <br />
-         <input type="hidden" value="add" name="post_type" >
-         <input type = "submit" value = "Submit">
       </fieldset>
-   
-   </form>
-   <br/>
+      <br />
 
-<!--    <table>
-      <caption></caption>
-      <thead>
-         <tr>
-            <th><b>Last Name</b></th>
-            <th><b>First Name</b></th>
-            <th><b>House (Alma Mater)</b></th>
-            <th colspan="2"><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td>Flitwick</td>
-            <td>Fillius</td>
-            <td>Ravenclaw</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'update_classes';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>Lupin</td>
-            <td>Remus</td>
-            <td>Gryffindor</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>McGonagall</td>
-            <td>Minerva</td>
-            <td>Gryffindor</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>Moody</td>
-            <td>Alastor</td>
-            <td>NULL</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>Severus</td>
-            <td>Snape</td>
-            <td>Slytherin</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-            
-         </tr>
-         <tr>
-            <td>Sprout</td>
-            <td>Pomona</td>
-            <td>Hufflepuff</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>Trelawney</td>
-            <td>Sybill</td>
-            <td>Ravenclaw</td>
-            <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
-            <td><button onclick="window.location.href = 'professors';">Delete</button></td>
-         </tr>
-      </tbody>
-   </table> -->
+      <fieldset>
+         <label>*Last Name:
+            <input type="text" name="last_name_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
 
-   <!-- Table populated from database using SELECT -->
-   <table>
+      <fieldset>
+         <label for="house_input">House:</label>
+         <select id="house_input" name="house_input" required>
+            <option value="None">No House</option>
+            <option value="Gryffindor">Gryffindor</option>
+            <option value="Slytherin">Slytherin</option>
+            <option value="Ravenclaw">Ravenclaw</option>
+            <option value="Hufflepuff">Hufflepuff</option>
+         </select>
+      </fieldset>
+      <p> <i>* Indicates a Required Field </i> </p>
+      <br />
+      <input type="hidden" value="add" name="post_type">
+      <input type="submit" value="Submit">
+   </fieldset>
+
+</form>
+<br />
+<!-- Sample hard coded table-->
+<table>
+   <caption></caption>
+   <thead>
+      <tr>
+         <th><b>Last Name</b></th>
+         <th><b>First Name</b></th>
+         <th><b>House (Alma Mater)</b></th>
+         <th colspan="2"><b>Modify</b></th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Flitwick</td>
+         <td>Fillius</td>
+         <td>Ravenclaw</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'update_classes';">Delete</button></td>
+      </tr>
+      <tr>
+         <td>Lupin</td>
+         <td>Remus</td>
+         <td>Gryffindor</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+      </tr>
+      <tr>
+         <td>McGonagall</td>
+         <td>Minerva</td>
+         <td>Gryffindor</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+      </tr>
+      <tr>
+         <td>Moody</td>
+         <td>Alastor</td>
+         <td>NULL</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+      </tr>
+      <tr>
+         <td>Severus</td>
+         <td>Snape</td>
+         <td>Slytherin</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+
+      </tr>
+      <tr>
+         <td>Sprout</td>
+         <td>Pomona</td>
+         <td>Hufflepuff</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+      </tr>
+      <tr>
+         <td>Trelawney</td>
+         <td>Sybill</td>
+         <td>Ravenclaw</td>
+         <td><button onclick="window.location.href = 'update_professors';">Edit</button></td>
+         <td><button onclick="window.location.href = 'professors';">Delete</button></td>
+      </tr>
+   </tbody>
+</table>
+
+<!-- Table populated from database using SELECT -->
+<!-- <table>
       <caption></caption>
       <thead>
          <tr>
@@ -159,8 +139,6 @@
          {% endfor %}  
    
       </tbody>
-   </table>
+   </table> -->
 
-   
-</body>
-</html>
+{% endblock%}

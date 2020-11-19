@@ -1,68 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Houses Page</title>
+{% extends 'base.html' %}
+{% block title %}Houses{% endblock%}
+{% block pageheader %} Hogwarts Houses {% endblock %}
+{%block content%}
 
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-         <a href="/index">Students</a>
-         <a href="/houses">Houses</a>
-         <a href="/professors">Professors</a>
-         <a href="/classes">Classes</a>
-         <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Houses of Hogwarts</center></strong></h1>
-</head>
-<body>
-      <form action = '/Houses' method = "post" class = addform>
-         <fieldset>
-            <legend>Add New House</legend>
-      
-            <fieldset>
-               <label>*House Name:
-                  <input type="text" name="house_name_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-      
-            <fieldset>
-               <label>*House Mascot:
-                  <input type="text" name="house_mascot_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <fieldset>
-               <label>*House Founder:
-                  <input type="text" name="house_founder_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br/>
-            <fieldset>
-               <label>*House Head:
-                  <input type="text" name="house_head_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <p> <i>* Indicates a Required Field </i> </p>
-            <input type="hidden" value="add" name="post_type" >
-            <input type = "submit" value = "Submit">
-         </fieldset>
-      </form>
+<form action='/Houses' method="post" class=addform>
+   <fieldset>
+      <legend>Add New House</legend>
+
+      <fieldset>
+         <label>*House Name:
+            <input type="text" name="house_name_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
       <br />
+
+      <fieldset>
+         <label>*House Mascot:
+            <input type="text" name="house_mascot_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <fieldset>
+         <label>*House Founder:
+            <input type="text" name="house_founder_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <fieldset>
+         <label>*House Head:
+            <input type="text" name="house_head_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <p> <i>* Indicates a Required Field </i> </p>
+      <input type="hidden" value="add" name="post_type">
+      <input type="submit" value="Submit">
+   </fieldset>
+</form>
+<br />
 
 <!--       <table>
          <caption></caption>
@@ -113,40 +93,38 @@
          </tbody>
       </table> -->
 
-   <!-- Table populated from database using SELECT -->
-   <table>
-      <caption></caption>
-      <thead>
-         <tr>
-               <th><b>House </b></th>
-               <th><b>Mascot</b></th>
-               <th><b>Founder</b></th>
-               <th><b>Head</b></th>
-               <th colspan="2"><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for r in rows %}
-         <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td><button onclick= window.location.href="/update_houses/{{ r[4] }}">Update</button></td>
-            <td>
-               <form action="/Houses" method="post">       
-                  <input type="hidden" value={{r[4]}} name="entry_id" >    
-                  <input type="hidden" value="delete" name="post_type" >
-                  <input type="submit" value="Delete" />
-                
-               </form>
-            </td>
-         </tr>
-         {% endfor %}  
-   
-      </tbody>
-   </table>
+<!-- Table populated from database using SELECT -->
+<table>
+   <caption></caption>
+   <thead>
+      <tr>
+         <th><b>House </b></th>
+         <th><b>Mascot</b></th>
+         <th><b>Founder</b></th>
+         <th><b>Head</b></th>
+         <th colspan="2"><b>Modify</b></th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for r in rows %}
+      <tr>
+         <td>{{ r[0] }}</td>
+         <td>{{ r[1] }}</td>
+         <td>{{ r[2] }}</td>
+         <td>{{ r[3] }}</td>
+         <td><button onclick=window.location.href="/update_houses/{{ r[4] }}">Update</button></td>
+         <td>
+            <form action="/Houses" method="post">
+               <input type="hidden" value={{r[4]}} name="entry_id">
+               <input type="hidden" value="delete" name="post_type">
+               <input type="submit" value="Delete" />
 
+            </form>
+         </td>
+      </tr>
+      {% endfor %}
 
-</body>
-</html>
+   </tbody>
+</table>
+
+{% endblock %}

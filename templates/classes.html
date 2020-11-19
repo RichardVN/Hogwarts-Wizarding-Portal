@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block pageheader %}Classes Page{% endblock %}
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Classes Page</title>
-
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-         <a href="/index">Students</a>
-         <a href="/houses">Houses</a>
-         <a href="/professors">Professors</a>
-         <a href="/classes">Classes</a>
-         <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Hogwarts Class Catalog</center></strong></h1>
-</head>
-<body>
+{% block content %}
    <form action = '/Classes' method = "post" class = addform>
       <fieldset>
          <legend>Add New Course Entry</legend>
@@ -91,7 +69,4 @@
    
       </tbody>
    </table>
-
-
-</body>
-</html>
+{% endblock %}

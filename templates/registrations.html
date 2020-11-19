@@ -1,118 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %} Professors Page {% endblock %}
+{% block pageheader %}Student Registration{% endblock %}
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Registrations Page</title>
+{% block content %}
 
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-         <a href="/index">Students</a>
-         <a href="/houses">Houses</a>
-         <a href="/professors">Professors</a>
-         <a href="/classes">Classes</a>
-         <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Student Registration</center></strong></h1>
-</head>
-<body>
-      <form action = '/Registrations' method = "post" class = addform>
-         <fieldset>
-            <legend>Add a Class for a Student</legend>
-      
-            <fieldset>
-               <label>*Student ID:
-                  <input type="number" name="student_id_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-      
-            <fieldset>
-               <label>*Class ID:
-                  <input type="number" name="class_id_input" size="30" maxlength="100" required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <p> <i>* Indicates a Required Field </i> </p>
-            <input type="hidden" value="add" name="post_type" >
-            <input type = "submit" value = "Submit">
-         </fieldset>
-      </form>
+<form action='/Registrations' method="post" class=addform>
+   <fieldset>
+      <legend>Add a Class for a Student</legend>
+
+      <fieldset>
+         <label>*Student ID:
+            <input type="number" name="student_id_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
       <br />
 
+      <fieldset>
+         <label>*Class ID:
+            <input type="number" name="class_id_input" size="30" maxlength="100" required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <p> <i>* Indicates a Required Field </i> </p>
+      <input type="hidden" value="add" name="post_type">
+      <input type="submit" value="Submit">
+   </fieldset>
+</form>
+<br />
 
-   <!-- Table populated from database using SELECT -->
-   <table>
-      <caption></caption>
-      <thead>
-         <tr>
-            <th><b>Student_ID</b></th>
-            <th><b>Last Name</b></th>
-            <th><b>First Name</b></th>
-            <th><b>Class_ID</b></th>
-            <th><b>Class</b></th>
-            <th><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for r in rows %}
-         <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td>{{ r[4] }}</td>
-            <td>
-               <form action="/Registrations" method="post"> 
-                  <input type="hidden" value={{r[0]}} name="registration_student_id" >   
-                  <input type="hidden" value={{r[3]}} name="registration_class_id" >   
-                  <input type="hidden" value="delete" name="post_type" >
-                  <input type="submit" value="Delete" />
-               </form>
-            </td>
-         </tr>
-         {% endfor %}  
 
-      </tbody>
-   </table>
+<!-- Table populated from database using SELECT -->
+<table>
+   <caption></caption>
+   <thead>
+      <tr>
+         <th><b>Student_ID</b></th>
+         <th><b>Last Name</b></th>
+         <th><b>First Name</b></th>
+         <th><b>Class_ID</b></th>
+         <th><b>Class</b></th>
+         <th><b>Modify</b></th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for r in rows %}
+      <tr>
+         <td>{{ r[0] }}</td>
+         <td>{{ r[1] }}</td>
+         <td>{{ r[2] }}</td>
+         <td>{{ r[3] }}</td>
+         <td>{{ r[4] }}</td>
+         <td>
+            <form action="/Registrations" method="post">
+               <input type="hidden" value={{r[0]}} name="registration_student_id">
+               <input type="hidden" value={{r[3]}} name="registration_class_id">
+               <input type="hidden" value="delete" name="post_type">
+               <input type="submit" value="Delete" />
+            </form>
+         </td>
+      </tr>
+      {% endfor %}
+
+   </tbody>
+</table>
 
 <!-- search for student POST form -->
-   <form action = '/Registrations' method = "post" class = "addform">
+<form action='/Registrations' method="post" class="addform">
+   <fieldset>
+      <legend>Search Filter: Lookup Student's Registration</legend>
+
       <fieldset>
-         <legend>Search Filter: Lookup Student's Registration</legend>
-   
-         <fieldset>
-            <label>*First Name:
-               <input type="text" name="first_name_search" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
+         <label>*First Name:
+            <input type="text" name="first_name_search" size="30" maxlength="100" required>
+         </label>
          <br />
-   
-         <fieldset>
-            <label>*Last Name:
-               <input type="text" name="last_name_search" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
+      </fieldset>
+      <br />
+
+      <fieldset>
+         <label>*Last Name:
+            <input type="text" name="last_name_search" size="30" maxlength="100" required>
+         </label>
          <br />
-         <p> <i>* Indicates a Required Field </i> </p>
-         <input type="hidden" value="search" name="post_type" >
-         <input type="submit" value="Submit Search Information" />
-         <td><button onclick= window.location.href="/Registrations"> Undo Filter</button></td>
-    </fieldset>
-   </form>
+      </fieldset>
+      <br />
+      <p> <i>* Indicates a Required Field </i> </p>
+      <input type="hidden" value="search" name="post_type">
+      <input type="submit" value="Submit Search Information" />
+      <td><button onclick=window.location.href="/Registrations"> Undo Filter</button></td>
+   </fieldset>
+</form>
 
-
-</body>
-</html>
+{%endblock%}

@@ -1,205 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %} SAMPLE PAGE {% endblock %}
+{% block pageheader %} SAMPLE TESTING PAGE {%endblock%}
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Students Page</title>
+{%block content%}
 
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-        <a href="/index">Students</a>
-        <a href="/houses">Houses</a>
-        <a href="/professors">Professors</a>
-        <a href="/classes">Classes</a>
-        <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Hogwarts Students</center></strong></h1>
-</head>
-<body>
+<main>
+    <h1>content header</h1>
+    <p>names (passed object)</p>
+    <p>{{names}}</p>
+    
+    <p>names[0] or names.0 (indexing)</p>
+    <p>{{names.0}}</p>
+    
+    <!-- for loop -->
+    <p>for name in names</p>
+    <p>name</p>
+    <ol>
+        {%for name in names %}
+        <li>{{name}}</li>
+        {%endfor%}
+    </ol>
 
-   <form action = '/index' method = "post" class = addform>
-      <fieldset>
-         <legend>Add New Student Entry</legend>
-   
-         <fieldset>
-            <label>*First Name:
-               <input type="text" name="first_name_input" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
-         <br />
-   
-         <fieldset>
-            <label>*Last Name:
-               <input type="text" name="last_name_input" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
-         <br />
-         <fieldset>
-            <label>*Birthdate:
-               <input type="date" name="birthdate_input" size="30" maxlength="100" required>
-            </label>
-            <br />
-         </fieldset>
-         <br />
+    <!-- conditional -->
+    <p>if 'alice in names '</p>
+    <p style="margin-left: 2em;">statement;</p>
+    <p>endif</p>
+    <p></p>
+    {% if 'alice' in names %}
+    <p>Alice is here!</p>
+    {%endif%}
+</main>
 
-         <fieldset>
-              <label for="year_input">*Student Year:</label>
-              <select id="year_input" name="year_input" required>
-                <option value= 1 >1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-              </select>
-         </fieldset>
-         <br/>
-
-         <fieldset>
-              <label for="house_input">*House:</label>
-              <select id="house_input" name="house_input" required>
-                <option value="Gryffindor">Gryffindor</option>
-                <option value="Slytherin">Slytherin</option>
-                <option value="Ravenclaw">Ravenclaw</option>
-                <option value="Hufflepuff">Hufflepuff</option>
-              </select>
-         </fieldset>
-         <p> <i>* Indicates a Required Field </i> </p>
-         <br />
-
-         <input type="hidden" value="add" name="post_type" >
-         <input type = "submit" value = "Submit">
-      </fieldset>
-   </form>
-
-      <br/>
- <!--   <table>
-      <caption></caption>
-      <thead>
-         <tr>
-            <th><b>Student ID</b></th>
-            <th><b>Last Name</b></th>
-            <th><b>First Name</b></th>
-            <th>Birthdate</th>
-            <th><b>Year</b></th>
-            <th><b>House</b></th>
-            <th colspan ="2"><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td>6</td>
-            <td>Diggory</td>
-            <td>Cedric</td>
-            <td>1977-10-30</td>
-            <td>4</td>
-            <td>Hufflepuff</td>
-            <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-            <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>2</td>
-            <td>Granger</td>
-            <td>Hermione</td>
-            <td>1979-09-19</td>
-            <td>3</td>
-            <td>Gryffindor</td>
-            <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-            <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>4</td>
-            <td>Lovegood</td>
-            <td>Luna</td>
-            <td>1981-02-13</td>
-            <td>3</td>
-            <td>Ravenclaw</td>
-            <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-            <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>5</td>
-            <td>Malfoy</td>
-            <td>Draco</td>
-            <td>1980-06-05</td>
-            <td>3</td>
-            <td>Slytherin</td>
-            <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-            <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>1</td>
-            <td>Potter</td>
-            <td>Harry</td>
-            <td>1980-07-31</td>
-            <td>3</td>
-            <td>Gryffindor</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr>
-         <tr>
-            <td>3</td>
-            <td>Weasley</td>
-            <td>Ronald</td>
-            <td>1980-03-01</td>
-            <td>3</td>
-            <td>Gryffindor</td>
-            <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-            <td><button onclick="window.location.href = 'index';">Delete</button></td>
-         </tr> 
-      </tbody>
-   </table> -->
-   
-   <!-- Table populated from database using SELECT -->
-   <table>
-      <caption></caption>
-      <thead>
-         <tr>
-            <th><b>Student ID</b></th>
-            <th><b>Last Name</b></th>
-            <th><b>First Name</b></th>
-            <th>Birthdate</th>
-            <th><b>Year</b></th>
-            <th><b>House</b></th>
-            <th colspan ="2"><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for r in rows %}
-         <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td>{{ r[4] }}</td>
-            <td>{{ r[5] }}</td>
-           <td><button onclick= window.location.href="/update_students/{{ r[0] }}">Update</button></td>
-            <td>
-               <form action="/index" method="post">       
-                  <input type="hidden" value={{r[0]}} name="entry_id" >    
-                  <input type="hidden" value="delete" name="post_type" >
-                  <input type="submit" value="Delete" />
-                
-               </form>
-            </td>
-         </tr>
-         {% endfor %}  
-   
-      </tbody>
-   </table>
-
-
-
-</body>
-</html>
+{%endblock%}

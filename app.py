@@ -4,13 +4,19 @@ from flask import Flask, render_template
 app = Flask(__name__)       # argument is name of the app's module. We use __name__ because we run as '__main__'
 
 # route decorator tells Flask what URL should trigger our function
-@app.route('/hello')
+@app.route('/')
 def hi():                       # function given a name, which is used to generate URLs for that function
-    return ("Hello World!!")    # return ("string")  OR render_template("page.html"), belonging in templates folder
+    return render_template('base.html')    # return ("string")  OR render_template("page.html"), belonging in templates folder
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    title = "new title"
+    names = ['alice', 'jessica', 'katie']
+    return render_template('index.html', title=title, names=names)     # pass context from controller app to template html page KWARG
+
+@app.route('/students', methods = ['POST', 'GET'])
+def show_students():
+    return render_template('students.html')
 
 @app.route('/houses', methods = ['POST', 'GET'])
 def show_houses():
