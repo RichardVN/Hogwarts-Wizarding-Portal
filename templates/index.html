@@ -5,13 +5,13 @@
 {%block content%}
 
 <main>
-    <h1>content header</h1>
+    <h1>Test flask page</h1>
     <p>names (passed object)</p>
     <p>{{names}}</p>
-    
+
     <p>names[0] or names.0 (indexing)</p>
     <p>{{names.0}}</p>
-    
+
     <!-- for loop -->
     <p>for name in names</p>
     <p>name</p>
@@ -29,6 +29,14 @@
     {% if 'alice' in names %}
     <p>Alice is here!</p>
     {%endif%}
+
+    <div>
+        {% if data %}
+        <h1>this is a POST. we have data bloew</h1>
+        <p>{{data}}</p>
+        <p>{{fname}}</p>
+        {%endif%}
+    </div>
 </main>
 
 {%endblock%}

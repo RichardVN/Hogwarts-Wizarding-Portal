@@ -18,10 +18,14 @@ Jinja2 = "==2.11.2"
 MarkupSafe = "==1.1.1"
 Werkzeug = "==1.0.1"
 python-dotenv = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+pylint-flask = "*"
 
 [requires]
 python_version = "3.8"
