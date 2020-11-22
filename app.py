@@ -142,9 +142,15 @@ def show_students():
 
             new_student = Students(
                 first_name=first_name, last_name=last_name, birthdate=birthdate, year=year, house_id=house_id)
-            print('POST: new student entry successfully added')
-            db.session.add(new_student)
-            db.session.commit()
+
+            try:
+                db.session.add(new_student)
+                db.session.commit()
+                print(
+                    f'POST: new student: {first_name} {last_name} successfully added')
+            except:
+                return("There was an error adding that student.")
+
             return redirect('/students')
 
         # delete 'post_type' == 'delete'
@@ -152,13 +158,42 @@ def show_students():
             print("\n------- index POST delete -----")
             print("deleting a student to the database")
             delete_id = request.form['delete_id']
-            student_to_delete = Students.query.filter_by(id=delete_id).first()
-            print(
-                f"Deleting ID:{student_to_delete.id}, {student_to_delete.first_name} {student_to_delete.last_name}")
-            db.session.delete(student_to_delete)
-            db.session.commit()
+            student_to_delete = Students.query.get_or_404(delete_id)
+            try:
+                print(
+                    f"Deleting Student ID:{student_to_delete.id}, {student_to_delete.first_name} {student_to_delete.last_name}. ", end="")
+                db.session.delete(student_to_delete)
+                db.session.commit()
+                print("Deletion Successful!")
+            except:
+                return("There was an error deleting that student.")
 
             return redirect('/students')
+
+
+@app.route('/update-student/<int:id>', methods=['POST', 'GET'])
+def update_student(id):
+    if request.method == 'GET':
+        student = Students.query.get_or_404(id)
+        houses = Houses.query.order_by(Houses.name).all()
+        return render_template('update_students.html', student=student, houses=houses)
+    elif request.method == 'POST':
+        # update values
+
+        student_to_update = Students.query.get_or_404(id)
+        print(
+            f"updating values for: {student_to_update.id} {student_to_update.first_name} {student_to_update.last_name}")
+        student_to_update.first_name = request.form['first_name']
+        student_to_update.last_name = request.form['last_name']
+        student_to_update.birthdate = request.form['birthdate']
+        student_to_update.year = request.form['year']
+        student_to_update.house_id = request.form['house_id']
+        try:
+            db.session.commit()
+            print("Update Successful!")
+        except:
+            return "There was an error updating the student"
+        return redirect('/students')
 
 
 @app.route('/houses', methods=['POST', 'GET'])

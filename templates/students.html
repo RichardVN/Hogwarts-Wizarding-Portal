@@ -34,7 +34,7 @@
       <fieldset>
          <label for="year">*Student Year:</label>
          <select id="year" name="year" required>
-            <option value=1>1</option>
+            <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -170,15 +170,13 @@
          <!-- add the corresponding house name for the student -->
          <td>{{ student_houses.pop(0) }}</td>
 
-         <td><button onclick=window.location.href="/update_students/{{ student.id }}">Update</button></td>
+         <td><button onclick=window.location.href="/update-student/{{ student.id }}">Update</button></td>
          <td>
+            <!-- Delete a student -->
             <form action="/students" method="post">
-
                <input type="hidden" value={{student.id}} name="delete_id">
-
                <input type="hidden" value="delete" name="post_type">
                <input type="submit" value="Delete" />
-
             </form>
          </td>
       </tr>
