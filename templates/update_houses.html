@@ -1,70 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--My Stylesheet-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-
-    <title>House Update Page</title>
-
-    <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-        <a href="/index">Students</a>
-        <a href="/houses">Houses</a>
-        <a href="/professors">Professors</a>
-        <a href="/classes">Classes</a>
-        <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong>
-            <center>Update House</center>
-        </strong></h1>
-</head>
+{% extends 'base.html' %}
+{% block title %}Update House{% endblock%}
+{% block pageheader %} Update House {% endblock %}
+{%block content%}
 
 <body>
-   <form class="edit" action ='/update_houses/{{ house[0] }}' method = "post">
+    <form class="edit" action='/update-house/{{ house.id }}' method="post">
         <fieldset>
             <legend>Update House Data</legend>
 
             <fieldset>
-                <label>*House Name:
-                    <input type="text" name="house_name_input" size="30" maxlength="100" value = '{{ house[1] }}' required>
-                </label>
-                <br />
-            </fieldset>
-            <br />
+                <legend>Add New House</legend>
 
-            <fieldset>
-                <label>*House Mascot:
-                    <input type="text" name="house_mascot_input" size="30" maxlength="100" value = '{{ house[2] }}' required>
-                </label>
+                <fieldset>
+                    <label>*House Name:
+                        <input type="text" name="name" value={{house.name}} size="30" maxlength="100" required>
+                    </label>
+                    <br />
+                </fieldset>
                 <br />
-            </fieldset>
-            <br />
-            <fieldset>
-                <label>*House Founder:
-                    <input type="text" name="house_founder_input" size="30" maxlength="100" value = '{{ house[3] }}' required>
-                </label>
+
+                <fieldset>
+                    <label>*House Mascot:
+                        <input type="text" name="mascot" value = {{house.mascot}} size="30" maxlength="100" required>
+                    </label>
+                    <br />
+                </fieldset>
                 <br />
-            </fieldset>
-            <br />
-            <fieldset>
-                <label>*House Head:
-                    <input type="text" name="house_head_input" size="30" maxlength="100" value = '{{ house[4] }}' required>
-                </label>
+                <fieldset>
+                    <label>*House Founder:
+                        <input type="text" name="founder" value={{house.founder}} size="30" maxlength="100" required>
+                    </label>
+                    <br />
+                </fieldset>
                 <br />
+                <fieldset>
+                    <label>*House Head:
+                        <input type="text" name="head" value={{house.head}} size="30" maxlength="100" required>
+                    </label>
+                    <br />
+                </fieldset>
+                <br />
+                <p> <i>* Indicates a Required Field </i> </p>
+                <input type="submit" value="Submit">
             </fieldset>
-            <br />
-            <button type="submit" value='Submit'>Submit</button> 
-        </fieldset>
     </form>
-
-</body>
-
-</html>
+    {% endblock %}

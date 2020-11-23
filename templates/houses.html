@@ -1,16 +1,15 @@
-
 {% extends 'base.html' %}
 {% block title %}Houses{% endblock%}
 {% block pageheader %} Hogwarts Houses {% endblock %}
 {%block content%}
 
-<form action='/Houses' method="post" class=addform>
+<form action='/houses' method="post" class=addform>
    <fieldset>
       <legend>Add New House</legend>
 
       <fieldset>
          <label>*House Name:
-            <input type="text" name="house_name_input" size="30" maxlength="100" required>
+            <input type="text" name="name" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
@@ -18,21 +17,21 @@
 
       <fieldset>
          <label>*House Mascot:
-            <input type="text" name="house_mascot_input" size="30" maxlength="100" required>
+            <input type="text" name="mascot" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
       <br />
       <fieldset>
          <label>*House Founder:
-            <input type="text" name="house_founder_input" size="30" maxlength="100" required>
+            <input type="text" name="founder" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
       <br />
       <fieldset>
          <label>*House Head:
-            <input type="text" name="house_head_input" size="30" maxlength="100" required>
+            <input type="text" name="head" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
@@ -106,19 +105,18 @@
       </tr>
    </thead>
    <tbody>
-      {% for r in rows %}
+      {% for house in houses %}
       <tr>
-         <td>{{ r[0] }}</td>
-         <td>{{ r[1] }}</td>
-         <td>{{ r[2] }}</td>
-         <td>{{ r[3] }}</td>
-         <td><button onclick=window.location.href="/update_houses/{{ r[4] }}">Update</button></td>
+         <td>{{ house.name }}</td>
+         <td>{{ house.mascot }}</td>
+         <td>{{ house.founder }}</td>
+         <td>{{ house.head }}</td>
+         <td><button onclick=window.location.href="/update-house/{{ house.id }}">Update</button></td>
          <td>
-            <form action="/Houses" method="post">
-               <input type="hidden" value={{r[4]}} name="entry_id">
+            <form action="/houses" method="post">
+               <input type="hidden" value={{house.id}} name="delete_id">
                <input type="hidden" value="delete" name="post_type">
                <input type="submit" value="Delete" />
-
             </form>
          </td>
       </tr>
