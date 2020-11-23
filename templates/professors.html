@@ -27,6 +27,7 @@
       <fieldset>
          <label for="house_id">*House:</label>
          <select id="house_id" name="house_id" required>
+            <option value="" disabled selected>(Select a House)</option>
             {% if houses %}
             {% for house in houses%}
             <option value={{house.id}}>{{house.name}}</option>

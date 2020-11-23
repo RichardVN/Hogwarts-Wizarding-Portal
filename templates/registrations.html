@@ -11,6 +11,7 @@
       <fieldset>
          <label for="student_id">*Student:</label>
          <select id="student_id" name="student_id" required>
+            <option value="" disabled selected>(Select a Student)</option>
             {% if students %}
             {% for student in students%}
             <option value={{student.id}}>{{student.last_name}}, {{student.first_name}}</option>
@@ -23,8 +24,9 @@
       <br />
 
       <fieldset>
-         <label for="course_id">*Course:</label>
+         <label for="course_id">*Class:</label>
          <select id="course_id" name="course_id" required>
+            <option value="" disabled selected>(Select a Class)</option>
             {% if courses %}
             {% for course in courses%}
             <option value={{course.id}}>{{course.name}}</option>
@@ -48,10 +50,10 @@
    <caption></caption>
    <thead>
       <tr>
-         <th><b>Student_ID</b></th>
+         <th><b>Student ID</b></th>
          <th><b>Last Name</b></th>
          <th><b>First Name</b></th>
-         <th><b>Class_ID</b></th>
+         <th><b>Class ID</b></th>
          <th><b>Class</b></th>
          <th><b>Modify</b></th>
       </tr>
