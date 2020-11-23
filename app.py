@@ -26,18 +26,17 @@ def get_env_variable(name):
         raise Exception(message)
 
 
-# retrieve from environment variables
-POSTGRES_URL = get_env_variable("POSTGRES_URL")
-POSTGRES_USER = get_env_variable("POSTGRES_USER")
-POSTGRES_PW = get_env_variable("POSTGRES_PW")
-POSTGRES_DB = get_env_variable("POSTGRES_DB")
-
 # Dev environment?
 ENV = 'production'
 
 # Config DB URI of localhost or heroku server
 if ENV == 'dev':
     app.debug = True
+    # retrieve from environment variables
+    POSTGRES_URL = get_env_variable("POSTGRES_URL")
+    POSTGRES_USER = get_env_variable("POSTGRES_USER")
+    POSTGRES_PW = get_env_variable("POSTGRES_PW")
+    POSTGRES_DB = get_env_variable("POSTGRES_DB")
     DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(
         user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL, db=POSTGRES_DB)
     # ex. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost:5432/HWP'
