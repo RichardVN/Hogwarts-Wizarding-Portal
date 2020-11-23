@@ -1,0 +1,7 @@
+__pycache__
+/.vscode
+/venv
+.DS_Store
+.env
+/migrations
+templates/index.html
