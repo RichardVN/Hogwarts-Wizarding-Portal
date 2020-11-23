@@ -1,56 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %}Update Class{% endblock%}
+{% block pageheader %} Update Class {% endblock %}
+{%block content%}
+<form class="edit" action='/update-class/{{ course.id }}' method="post">
+   <fieldset>
+      <legend>Update Class Data</legend>
+      <fieldset>
+         <label>*Class Name:
+            <input type="text" name="name" size="30" maxlength="100" value='{{ course.name }}' required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <fieldset>
+         <label>*Class Credits:
+            <input type="number" name="credit" size="30" maxlength="100" value='{{ course.credit }}' required>
+         </label>
+         <br />
+      </fieldset>
+      <br />
+      <fieldset>
+         <label for="professor_id">*Professor:</label>
+         <select id="professor_id" name="professor_id" required>
+            {% if professors %}
+            {% for professor in professors%}
+            {% if professor.id == course.professor_id %}
+            <option selected value={{professor.id}}>{{professor.first_name}} {{professor.last_name}}</option>
+            {% else %}
+            <option value={{professor.id}}>{{professor.first_name}} {{professor.last_name}}</option>
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            <option selected disabled value="">No Professors Available</option>
+            {% endif %}
+         </select>
+      </fieldset>
+      <br />
+      <button type="submit" value="Submit">Submit</button>
+   </fieldset>
+</form>
 
-   <!--My Stylesheet-->
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
-   
-   <title>Class Update Page</title>
-
-   <!--Menu Bar adapted from source:
-   https://www.w3schools.com/howto/howto_js_topnav.asp-->
-   <div class="topnav">
-      <ul>
-         <a href="/index">Students</a>
-         <a href="/houses">Houses</a>
-         <a href="/professors">Professors</a>
-         <a href="/classes">Classes</a>
-         <a href="/registrations">Registrations</a>
-      </ul>
-    </div>
-    <br>
-    <h1><strong><center>Update Class</center></strong></h1>
-</head>
-<body>
-   <form class="edit" action ='/update_classes/{{ classes[0] }}' method = "post">
-         <fieldset>
-            <legend>Update Class Data</legend>
-            <fieldset>
-               <label>*Class Title:
-                  <input type="text" name="class_title_input" size="30" maxlength="100" value = '{{ classes[1] }}' required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <fieldset>
-               <label>*Class Credits:
-                  <input type="number" name="class_credits_input" size="30" maxlength="100" value = '{{ classes[2] }}' required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <fieldset>
-               <label>*Professor ID:
-                  <input type="number" name="class_professor_input" size="30" maxlength="100" value = '{{ classes[3] }}' required>
-               </label>
-               <br />
-            </fieldset>
-            <br />
-            <button type="submit" value = "Submit">Submit</button>
-         </fieldset>
-   </form>
-   
-</body>
-</html>
+{% endblock %}

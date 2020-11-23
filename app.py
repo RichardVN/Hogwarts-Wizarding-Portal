@@ -266,15 +266,159 @@ def update_house(id):
             return "There was an error updating the house"
         return redirect('/houses')
 
+
 @app.route('/professors', methods=['POST', 'GET'])
 def show_professors():
-    return render_template('professors.html')
+    if request.method == "GET":
+        professors = Professors.query.order_by(Professors.last_name).all()
+        houses = Houses.query.order_by(Houses.name).all()
+
+        # for each professor, get the name of their house from the house id
+        professor_houses = [Houses.query.filter_by(
+            id=professor.house_id).first() for professor in professors]
+        for idx, house in enumerate(professor_houses):
+            professor_houses[idx] = house.name if house else None
+
+        return render_template('professors.html', professors=professors, houses=houses, professor_houses=professor_houses)
+
+    elif request.method == "POST":
+        if request.form['post_type'] == "add":
+            print("\n------- index POST add -----")
+            print("Adding a professor to the database")
+
+            first_name = request.form['first_name']
+            last_name = request.form['last_name']
+            house_id = request.form['house_id']
+
+            print("PARAMS:", first_name, last_name, house_id)
+
+            new_professor = Professors(
+                first_name=first_name, last_name=last_name, house_id=house_id)
+
+            try:
+                db.session.add(new_professor)
+                db.session.commit()
+                print(
+                    f'POST: new professor: {first_name} successfully added')
+            except:
+                "There was an error adding that professor."
+
+            return redirect('/professors')
+
+        # delete 'post_type' == 'delete'
+        else:
+            print("\n------- index POST delete -----")
+            print("deleting a professor to the database")
+            delete_id = request.form['delete_id']
+            professor_to_delete = Professors.query.get_or_404(delete_id)
+            try:
+                print(
+                    f"Deleting Professor ID:{professor_to_delete.id}, {professor_to_delete.first_name} {professor_to_delete.last_name}. ", end="")
+                db.session.delete(professor_to_delete)
+                db.session.commit()
+                print("Deletion Successful!")
+            except:
+                return("There was an error deleting that professor.")
+
+            return redirect('/professors')
+
+
+@app.route('/update-professor/<int:id>', methods=['POST', 'GET'])
+def update_professor(id):
+    if request.method == 'GET':
+        professor = Professors.query.get_or_404(id)
+        houses = Houses.query.order_by(Houses.name).all()
+        return render_template('update_professors.html', professor=professor, houses=houses)
+    elif request.method == 'POST':
+        # update values
+
+        professor_to_update = Professors.query.get_or_404(id)
+        print(
+            f"updating values for: {professor_to_update.id} {professor_to_update.first_name} {professor_to_update.last_name}")
+        professor_to_update.first_name = request.form['first_name']
+        professor_to_update.last_name = request.form['last_name']
+        professor_to_update.house_id = request.form['house_id']
+        try:
+            db.session.commit()
+            print("Update Successful!")
+        except:
+            return "There was an error updating the professor"
+        return redirect('/professors')
 
 
 @app.route('/classes', methods=['POST', 'GET'])
 def show_classes():
-    return render_template('classes.html')
+    if request.method == 'GET':
+        courses = Classes.query.order_by(Classes.name).all()
+        professors = Professors.query.order_by(Professors.last_name).all()
 
+        # for each course, get the name of their professor from the professor id
+        course_professors = [Professors.query.filter_by(
+            id=course.professor_id).first() for course in courses]
+        for idx, professor in enumerate(course_professors):
+            course_professors[idx] = professor.last_name + \
+                ", " + professor.first_name if professor else None
+        return render_template('classes.html', courses=courses, professors=professors, course_professors=course_professors)
+    elif request.method == 'POST':
+        if request.form['post_type'] == "add":
+            print("\n------- index POST add -----")
+            print("Adding a class to the database")
+
+            name = request.form['name']
+            credit = request.form['credit']
+            professor_id = request.form['professor_id']
+
+            new_class = Classes(
+                name=name, credit=credit, professor_id=professor_id)
+
+            try:
+                db.session.add(new_class)
+                db.session.commit()
+                print(
+                    f'POST: new class: {name}  successfully added')
+            except:
+                return("There was an error adding that class.")
+
+            return redirect('/classes')
+
+        # delete 'post_type' == 'delete'
+        else:
+            print("\n------- POST delete -----")
+            print("deleting a class from the database")
+            delete_id = request.form['delete_id']
+            class_to_delete = Classes.query.get_or_404(delete_id)
+            try:
+                print(
+                    f"Deleting Class ID: {class_to_delete.id}, Name: {class_to_delete.name}. ", end="")
+                db.session.delete(class_to_delete)
+                db.session.commit()
+                print("Deletion Successful!")
+            except:
+                return("There was an error deleting that class.")
+
+            return redirect('/classes')
+
+
+@app.route('/update-class/<int:id>', methods=['POST', 'GET'])
+def update_class(id):
+    if request.method == 'GET':
+        course = Classes.query.get_or_404(id)
+        professors = Professors.query.order_by(Professors.last_name).all()
+        return render_template('update_classes.html', course=course, professors=professors)
+    elif request.method == 'POST':
+        # update values
+        class_to_update = Classes.query.get_or_404(id)
+        print(
+            f"updating values for: ID: {class_to_update.id} Name: {class_to_update.name}...")
+        class_to_update.name = request.form['name']
+        class_to_update.credit = request.form['credit']
+        class_to_update.professor_id = request.form['professor_id']
+        try:
+            db.session.commit()
+            print("Update Successful!")
+        except:
+            return "There was an error updating the class"
+        return redirect('/classes')
 
 @app.route('/registrations', methods=['POST', 'GET'])
 def show_registrations():
