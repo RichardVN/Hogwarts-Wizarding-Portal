@@ -4,13 +4,13 @@
 
 {% block content %}
 
-<form action='/Professors' method="post" class=addform>
+<form action='/professors' method="post" class=addform>
    <fieldset>
       <legend>Add New Professor Entry</legend>
 
       <fieldset>
          <label>*First Name:
-            <input type="text" name="first_name_input" size="30" maxlength="100" required>
+            <input type="text" name="first_name" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
@@ -18,20 +18,22 @@
 
       <fieldset>
          <label>*Last Name:
-            <input type="text" name="last_name_input" size="30" maxlength="100" required>
+            <input type="text" name="last_name" size="30" maxlength="100" required>
          </label>
          <br />
       </fieldset>
       <br />
 
       <fieldset>
-         <label for="house_input">House:</label>
-         <select id="house_input" name="house_input" required>
-            <option value="None">No House</option>
-            <option value="Gryffindor">Gryffindor</option>
-            <option value="Slytherin">Slytherin</option>
-            <option value="Ravenclaw">Ravenclaw</option>
-            <option value="Hufflepuff">Hufflepuff</option>
+         <label for="house_id">*House:</label>
+         <select id="house_id" name="house_id" required>
+            {% if houses %}
+            {% for house in houses%}
+            <option value={{house.id}}>{{house.name}}</option>
+            {% endfor %}
+            {% else %}
+            <option disabled value="">No Houses Available</option>
+            {% endif %}
          </select>
       </fieldset>
       <p> <i>* Indicates a Required Field </i> </p>
@@ -43,7 +45,7 @@
 </form>
 <br />
 <!-- Sample hard coded table-->
-<table>
+<!-- <table>
    <caption></caption>
    <thead>
       <tr>
@@ -105,40 +107,41 @@
          <td><button onclick="window.location.href = 'professors';">Delete</button></td>
       </tr>
    </tbody>
-</table>
+</table> -->
 
 <!-- Table populated from database using SELECT -->
-<!-- <table>
-      <caption></caption>
-      <thead>
-         <tr>
-            <th><b>Professor ID</b></th>
-            <th><b>Last Name</b></th>
-            <th><b>First Name</b></th>
-            <th><b>House (Alma Mater)</b></th>
-            <th colspan="2"><b>Modify</b></th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for r in rows %}
-         <tr>
-            <td>{{ r[0] }}</td>
-            <td>{{ r[1] }}</td>
-            <td>{{ r[2] }}</td>
-            <td>{{ r[3] }}</td>
-            <td><button onclick= window.location.href="/update_professors/{{ r[0] }}">Update</button></td>
-            <td>
-               <form action="/Professors" method="post">       
-                  <input type="hidden" value={{r[0]}} name="entry_id" >    
-                  <input type="hidden" value="delete" name="post_type" >
-                  <input type="submit" value="Delete" />
-                
-               </form>
-            </td>
-         </tr>
-         {% endfor %}  
-   
-      </tbody>
-   </table> -->
+<table>
+   <caption></caption>
+   <thead>
+      <tr>
+         <!-- <th><b>Professor ID</b></th> -->
+         <th><b>Last Name</b></th>
+         <th><b>First Name</b></th>
+         <th><b>House (Alma Mater)</b></th>
+         <th colspan="2"><b>Modify</b></th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for professor in professors %}
+      <tr>
+         <!-- <td>{{ professor.id }}</td> -->
+         <td>{{ professor.last_name }}</td>
+         <td>{{ professor.first_name }}</td>
+         <!-- add house name corresponding to professor -->
+         <td>{{ professor_houses.pop(0)}}</td>
+         <td><button onclick=window.location.href="/update-professor/{{ professor.id }}">Update</button></td>
+         <td>
+            <form action="/professors" method="post">
+               <input type="hidden" value={{professor.id}} name="delete_id">
+               <input type="hidden" value="delete" name="post_type">
+               <input type="submit" value="Delete" />
+
+            </form>
+         </td>
+      </tr>
+      {% endfor %}
+
+   </tbody>
+</table>
 
 {% endblock%}
