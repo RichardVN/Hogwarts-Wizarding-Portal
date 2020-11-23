@@ -70,6 +70,15 @@ class Professors(db.Model):
         'houses.id', ondelete='SET NULL'))
 
 
+# Many to Many relationship table
+registration_table = db.Table('StudentsClasses', db.Model.metadata,
+                              db.Column('student_id', db.Integer,
+                                        db.ForeignKey('students.id', ondelete='CASCADE')),
+                              db.Column('class_id', db.Integer,
+                                        db.ForeignKey('classes.id', ondelete='CASCADE'))
+                              )
+
+
 class Students(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
@@ -78,6 +87,8 @@ class Students(db.Model):
     year = db.Column(db.Integer, nullable=False)
     house_id = db.Column(db.Integer, db.ForeignKey(
         'houses.id', ondelete='SET NULL'))
+    registered_classes = db.relationship(
+        "Classes", secondary=registration_table)
 
 
 class Classes(db.Model):
@@ -87,14 +98,6 @@ class Classes(db.Model):
     professor_id = db.Column(db.Integer, db.ForeignKey(
         'professors.id', ondelete='SET NULL'))
 
-
-# Many to Many relationship table
-registration_table = db.Table('StudentsClasses', db.Model.metadata,
-                              db.Column('student_id', db.Integer,
-                                        db.ForeignKey('students.id', ondelete='CASCADE')),
-                              db.Column('class_id', db.Integer,
-                                        db.ForeignKey('classes.id', ondelete='CASCADE'))
-                              )
 
 # route decorator tells Flask what URL should trigger our function. Just calling a website with url is a GET request.
 
@@ -295,13 +298,13 @@ def show_professors():
             new_professor = Professors(
                 first_name=first_name, last_name=last_name, house_id=house_id)
 
-            try:
-                db.session.add(new_professor)
-                db.session.commit()
-                print(
-                    f'POST: new professor: {first_name} successfully added')
-            except:
-                "There was an error adding that professor."
+            # try:
+            db.session.add(new_professor)
+            db.session.commit()
+            print(
+                f'POST: new professor: {first_name} successfully added')
+            # except:
+            #     "There was an error adding that professor."
 
             return redirect('/professors')
 
@@ -420,6 +423,63 @@ def update_class(id):
             return "There was an error updating the class"
         return redirect('/classes')
 
+
 @app.route('/registrations', methods=['POST', 'GET'])
 def show_registrations():
-    return render_template('registrations.html')
+    if request.method == 'GET':
+        registrations = db.session.query(registration_table).all()
+        students_courses = []
+        for registration in registrations:
+            student_id = registration.student_id
+            student = Students.query.get_or_404(student_id)
+
+            class_id = registration.class_id
+            course = Classes.query.get_or_404(class_id)
+            # list of tuples of (student_entry, course_entry)
+            students_courses.append((student, course))
+        students = Students.query.order_by(Students.last_name).all()
+        courses = Classes.query.order_by(Classes.name).all()
+        return render_template('registrations.html', students_courses=students_courses, students=students, courses=courses)
+
+    elif request.method == 'POST':
+        if request.form['post_type'] == 'add':
+            print("\n------- registration POST add -----")
+            print("Adding a registration to the database")
+
+            student_id = request.form['student_id']
+            student = Students.query.get_or_404(student_id)
+
+            course_id = request.form['course_id']
+            course = Classes.query.get_or_404(course_id)
+
+            try:
+                print(f'about to append registration, Student: {student.first_name} register Class: {course.name}')
+                student.registered_classes.append(course)
+                db.session.add(student)
+                db.session.commit()
+                print(f'POST: registration  successfully added')
+            except:
+                return("There was an error adding that registration .")
+
+            return redirect('/registrations')
+
+        #  delete a registration, 'post_type' == 'delete'
+        else:
+            print("\n------- POST delete -----")
+            print("deleting a registration from the database")
+            student_id = request.form['student_id']
+            student = Students.query.get_or_404(student_id)
+
+            class_id = request.form['class_id']
+            course = Classes.query.get_or_404(class_id)
+
+            try:
+                print(f"attempting to remove {student.first_name}'s registration of {course.name}")
+                student.registered_classes.remove(course)
+                db.session.commit()
+                print('Successful removal of registration!')
+        
+            except:
+                return("There was an error deleting that student-class registration.")
+
+            return redirect('/registrations')
