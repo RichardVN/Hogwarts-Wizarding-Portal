@@ -105,21 +105,7 @@ class Classes(db.Model):
 @app.route('/')
 def hi():              # function given a name, which is used to generate URLs for that function (url_for(hi))
     # return ("string")  OR render_template("page.html"), belonging in templates folder
-    return render_template('base.html')
-
-
-@app.route('/index', methods=['GET', 'POST'])
-def index():
-    if request.method == 'GET':
-        names = ['alice', 'iris', 'katie']
-        # pass context from controller app to template html page KWARG
-        return render_template('index.html', names=names)
-    elif request.method == 'POST':
-        # dictionary object contains key-value pairs of "name", "value" attributes from html input element
-        data_dictionary = request.form
-        fname = request.form.get('first_name')
-        names = ['alice', 'iris', 'katie']
-        return render_template('index.html', names=names, data=data_dictionary, fname=fname)
+    return redirect('/students')
 
 
 @app.route('/students', methods=['POST', 'GET'])
