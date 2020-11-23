@@ -26,32 +26,30 @@ def get_env_variable(name):
         raise Exception(message)
 
 
-# the values of those depend on your setup
+# retrieve from environment variables
 POSTGRES_URL = get_env_variable("POSTGRES_URL")
 POSTGRES_USER = get_env_variable("POSTGRES_USER")
 POSTGRES_PW = get_env_variable("POSTGRES_PW")
 POSTGRES_DB = get_env_variable("POSTGRES_DB")
 
-
 # Dev environment?
-ENV = 'dev'
+ENV = 'production'
 
 # Config DB URI of localhost or heroku server
 if ENV == 'dev':
     app.debug = True
     DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(
         user=POSTGRES_USER, pw=POSTGRES_PW, url=POSTGRES_URL, db=POSTGRES_DB)
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost:5432/HWP'
+    # ex. app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost:5432/HWP'
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 else:
     app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://izpsqomnrdpxkn:9377d82c606fc291325acd6e23cbdc933079387a4073acb01369f7a7b93b57c1@ec2-52-5-176-53.compute-1.amazonaws.com:5432/d59lmrdv4dc89i"
 
 # Silence deprecation warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # create db object
 db = SQLAlchemy(app)
-
-# create model for db
 
 
 class Houses(db.Model):
@@ -439,7 +437,8 @@ def show_registrations():
             course = Classes.query.get_or_404(course_id)
 
             try:
-                print(f'about to append registration, Student: {student.first_name} register Class: {course.name}')
+                print(
+                    f'about to append registration, Student: {student.first_name} register Class: {course.name}')
                 student.registered_classes.append(course)
                 db.session.add(student)
                 db.session.commit()
@@ -460,11 +459,12 @@ def show_registrations():
             course = Classes.query.get_or_404(class_id)
 
             try:
-                print(f"attempting to remove {student.first_name}'s registration of {course.name}")
+                print(
+                    f"attempting to remove {student.first_name}'s registration of {course.name}")
                 student.registered_classes.remove(course)
                 db.session.commit()
                 print('Successful removal of registration!')
-        
+
             except:
                 return("There was an error deleting that student-class registration.")
 
