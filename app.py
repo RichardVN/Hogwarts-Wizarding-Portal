@@ -97,8 +97,6 @@ class Classes(db.Model):
 
 
 # route decorator tells Flask what URL should trigger our function. Just calling a website with url is a GET request.
-
-
 @app.route('/')
 def hi():              # function given a name, which is used to generate URLs for that function (url_for(hi))
     # return ("string")  OR render_template("page.html"), belonging in templates folder
@@ -120,7 +118,7 @@ def show_students():
         return render_template('students.html', students=students, houses=houses, student_houses=student_houses)
     elif request.method == 'POST':
         if request.form['post_type'] == "add":
-            print("\n------- index POST add -----")
+            print("\n------- students POST add -----")
             print("Adding a student to the database")
 
             first_name = request.form['first_name']
@@ -144,7 +142,7 @@ def show_students():
 
         # delete 'post_type' == 'delete'
         else:
-            print("\n------- index POST delete -----")
+            print("\n------- students POST delete -----")
             print("deleting a student to the database")
             delete_id = request.form['delete_id']
             student_to_delete = Students.query.get_or_404(delete_id)
@@ -192,7 +190,7 @@ def show_houses():
         return render_template('houses.html', houses=houses,)
     elif request.method == "POST":
         if request.form['post_type'] == "add":
-            print("\n------- index POST add -----")
+            print("\n------- Houses POST add -----")
             print("Adding a house to the database")
 
             name = request.form['name']
@@ -215,8 +213,8 @@ def show_houses():
 
         # delete 'post_type' == 'delete'
         else:
-            print("\n------- index POST delete -----")
-            print("deleting a house to the database")
+            print("\n------- House POST delete -----")
+            print("deleting a house from the database")
             delete_id = request.form['delete_id']
             house_to_delete = Houses.query.get_or_404(delete_id)
             try:
@@ -269,7 +267,7 @@ def show_professors():
 
     elif request.method == "POST":
         if request.form['post_type'] == "add":
-            print("\n------- index POST add -----")
+            print("\n------- Professor POST add -----")
             print("Adding a professor to the database")
 
             first_name = request.form['first_name']
@@ -293,7 +291,7 @@ def show_professors():
 
         # delete 'post_type' == 'delete'
         else:
-            print("\n------- index POST delete -----")
+            print("\n------- Professor POST delete -----")
             print("deleting a professor to the database")
             delete_id = request.form['delete_id']
             professor_to_delete = Professors.query.get_or_404(delete_id)
@@ -347,7 +345,7 @@ def show_classes():
         return render_template('classes.html', courses=courses, professors=professors, course_professors=course_professors)
     elif request.method == 'POST':
         if request.form['post_type'] == "add":
-            print("\n------- index POST add -----")
+            print("\n------- Classes POST add -----")
             print("Adding a class to the database")
 
             name = request.form['name']
