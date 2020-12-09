@@ -27,7 +27,7 @@ def get_env_variable(name):
 
 
 # Dev environment?
-ENV = 'production'
+ENV = 'dev'
 
 # Config DB URI of localhost or heroku server
 if ENV == 'dev':

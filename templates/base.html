@@ -9,12 +9,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--My Stylesheet-->
     {% block stylesheet %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen" />
+    
+    <!--My Stylesheet-->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen" /> -->
     <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {% endblock %}
 
     <title>{% block title %}DEFAULT TITLE{% endblock %}</title>
@@ -22,22 +23,40 @@
 
 <body>
     {% block header %}
-    {% block navbar %}
-    <div class="topnav">
-        <ul>
-            <a href={{url_for('show_students')}}>Students</a>
-            <a href={{url_for('show_houses')}}>Houses</a>
-            <a href={{url_for('show_professors')}}>Professors</a>
-            <a href={{url_for('show_classes')}}>Classes</a>
-            <a href={{url_for('show_registrations')}}>Registrations</a>
-        </ul>
-    </div>
+        {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">HWP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="{{ 'active nav-item' if active_page == 'students' else 'nav-item' }}">
+                        <a class="nav-link" href="{{url_for('show_students')}}">Students <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="{{ 'active nav-item' if active_page == 'houses' else 'nav-item' }}">
+                        <a class="nav-link" href="{{url_for('show_houses')}}">Houses</a>
+                    </li>
+                    <li class="{{ 'active nav-item' if active_page == 'professors' else 'nav-item' }}">
+                        <a class="nav-link" href="{{url_for('show_professors')}}">Professors</a>
+                    </li>
+                    <li class="{{ 'active nav-item' if active_page == 'classes' else 'nav-item' }}">
+                        <a class="nav-link" href="{{url_for('show_classes')}}">Classes</a>
+                    </li>
+                    <li class="{{ 'active nav-item' if active_page == 'registrations' else 'nav-item' }}">
+                        <a class="nav-link" href="{{url_for('show_registrations')}}">Registrations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% endblock %}
+
+        <h1><strong>
+                <center>{% block pageheader %}{% endblock %}</center>
+            </strong>
+        </h1>
     {% endblock %}
-    <h1><strong>
-            <center>{% block pageheader %}{% endblock %}</center>
-        </strong>
-    </h1>
-    {% endblock %}
+
     <div id="content">{% block content %} {% endblock %}</div>
     <div id="footer">{% block footer %}{% endblock %}</div>
 
