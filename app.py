@@ -43,7 +43,8 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://izpsqomnrdpxkn:9377d82c606fc291325acd6e23cbdc933079387a4073acb01369f7a7b93b57c1@ec2-52-5-176-53.compute-1.amazonaws.com:5432/d59lmrdv4dc89i"
+    app.config['SQLALCHEMY_DATABASE_URI'] = get_env_variable(
+        "PRODUCTION_POSTGRES_URI")
 
 # Silence deprecation warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
