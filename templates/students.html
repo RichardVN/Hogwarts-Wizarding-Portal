@@ -1,165 +1,84 @@
 {% extends 'base.html' %}
 {% set active_page = 'students' %}
-{% block title %}Students{% endblock%}
-{% block pageheader %} Hogwarts Students {% endblock %}
-{%block content%}
+{% block title %}Students
+{% endblock %}
+{% block pageheader %}
+    Hogwarts Students
+{% endblock %}
+{% block content %}
 
 <!-- add student form -->
-<form action='/students' method="post" class=addform>
-   <fieldset>
-      <legend>Add New Student Entry</legend>
 
-      <fieldset>
-         <label>*First Name:
-            <input type="text" name="first_name" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-
-      <fieldset>
-         <label>*Last Name:
-            <input type="text" name="last_name" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label>*Birthdate:
-            <input type="date" name="birthdate" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-
-      <fieldset>
-         <label for="year">*Student Year:</label>
-         <select id="year" name="year" required>
-            <option value="" disabled selected>--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-         </select>
-      </fieldset>
-      <br />
-
-      <fieldset>
-         <label for="house_id">*House:</label>
-         <select id="house_id" name="house_id" required>
-            <option value="" disabled selected>(Select a House)</option>
-            {% if houses %}
-            {% for house in houses%}
-            <option value={{house.id}}>{{house.name}}</option>
-            {% endfor %}
-            {% else %}
-            <option disabled value="">No Houses Available</option>
-            {% endif %}
-         </select>
-      </fieldset>
-      <p> <i>* Indicates a Required Field </i> </p>
-      <br />
-
-      <input type="hidden" value="add" name="post_type">
-      <input type="submit" value="Submit">
-   </fieldset>
-</form>
-
-<br />
-
-<!-- sample hardcoded table  -->
-<!-- <table>
-   <caption></caption>
-   <thead>
-      <tr>
-         <th><b>Student ID</b></th>
-         <th><b>Last Name</b></th>
-         <th><b>First Name</b></th>
-         <th>Birthdate</th>
-         <th><b>Year</b></th>
-         <th><b>House</b></th>
-         <th colspan="2"><b>Modify</b></th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>6</td>
-         <td>Diggory</td>
-         <td>Cedric</td>
-         <td>1977-10-30</td>
-         <td>4</td>
-         <td>Hufflepuff</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-      <tr>
-         <td>2</td>
-         <td>Granger</td>
-         <td>Hermione</td>
-         <td>1979-09-19</td>
-         <td>3</td>
-         <td>Gryffindor</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-      <tr>
-         <td>4</td>
-         <td>Lovegood</td>
-         <td>Luna</td>
-         <td>1981-02-13</td>
-         <td>3</td>
-         <td>Ravenclaw</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-      <tr>
-         <td>5</td>
-         <td>Malfoy</td>
-         <td>Draco</td>
-         <td>1980-06-05</td>
-         <td>3</td>
-         <td>Slytherin</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-      <tr>
-         <td>1</td>
-         <td>Potter</td>
-         <td>Harry</td>
-         <td>1980-07-31</td>
-         <td>3</td>
-         <td>Gryffindor</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-      <tr>
-         <td>3</td>
-         <td>Weasley</td>
-         <td>Ronald</td>
-         <td>1980-03-01</td>
-         <td>3</td>
-         <td>Gryffindor</td>
-         <td><button onclick="window.location.href = 'update_students';">Edit</button></td>
-         <td><button onclick="window.location.href = 'index';">Delete</button></td>
-      </tr>
-   </tbody>
-</table> -->
+<div class="row justify-content-center my-2">
+   <div class="col-md-6">
+      <!-- form card login -->
+      <div class="card ">
+            <div class="card-header">
+               <h3 class="mb-0">Add a Student</h3>
+            </div>
+            <div class="card-body">
+               <form action='/students' method="post" class="addform">
+                  <div class="form-group">
+                     <label for="">First Name</label>
+                     <input class="form-control" type="text" name="first_name" size="30" maxlength="100" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Last Name</label>
+                     <input class="form-control" type="text" name="last_name" size="30" maxlength="100" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="">Birthdate</label>
+                     <input class="form-control" type="date" name="birthdate" size="30" maxlength="100" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="year">*Student Year:</label>
+                     <select class="form-control" id="year" name="year" required>
+                        <option value="" disabled selected>--</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="house_id">*House:</label>
+                     <select class="form-control" id="house_id" name="house_id" required>
+                        <option value="" disabled selected>(Select a House)</option>
+                        {% if houses %}
+                           {% for house in houses %}
+                                 <option value={{ house.id }}>{{ house.name }}</option>
+                           {% endfor %}
+                        {% else %}
+                           <option disabled value="">No Houses Available</option>
+                        {% endif %}
+                     </select>
+                  </div>
+                  <input type="hidden" value="add" name="post_type">
+                  <button type="submit" class="btn btn-success btn-lg float-right">Submit</button>
+               </form>
+            </div>
+            <!--/card-block-->
+         </div>
+         <!-- /form card login -->
+   </div>
+</div>
 
 <!-- Table populated from database using SELECT -->
-<table>
-   <caption></caption>
-   <thead>
+<div class="row justify-content-center mt-5">
+   <div class="col-md-10">
+      <table class="table table-hover">
+   <thead class="thead-dark">
       <tr>
-         <th><b>Student ID</b></th>
-         <th><b>Last Name</b></th>
-         <th><b>First Name</b></th>
+         <th>Student ID</th>
+         <th>Last Name</th>
+         <th>First Name</th>
          <th>Birthdate</th>
-         <th><b>Year</b></th>
-         <th><b>House</b></th>
-         <th colspan="2"><b>Modify</b></th>
+         <th>Year</th>
+         <th>House</th>
+         <th colspan="2"></th>
       </tr>
    </thead>
    <tbody>
@@ -168,23 +87,31 @@
          <td>{{ student.id }}</td>
          <td>{{ student.last_name }}</td>
          <td>{{ student.first_name }}</td>
-         <td>{{ student.birthdate}}</td>
+         <td>{{ student.birthdate }}</td>
          <td>{{ student.year }}</td>
          <!-- add the corresponding house name for the student -->
          <td>{{ student_houses.pop(0) }}</td>
 
-         <td><button onclick=window.location.href="/update-student/{{ student.id }}">Update</button></td>
+         <td>
+            <button class="btn btn-secondary" onclick="window.location.href='/update-student/{{ student.id }}';">Update</button>
+         </td>
          <td>
             <!-- Delete a student -->
             <form action="/students" method="post">
-               <input type="hidden" value={{student.id}} name="delete_id">
+               <input type="hidden" value={{ student.id }} name="delete_id">
                <input type="hidden" value="delete" name="post_type">
-               <input type="submit" value="Delete" />
+               <button type="submit" class="btn btn-danger">Delete</button>
+
+               <!-- <input type="submit" value="Delete"/> -->
             </form>
          </td>
       </tr>
-      {% endfor%}
+      {% endfor %}
 
    </tbody>
 </table>
+   </div>
+</div>
+
 {% endblock %}
+
