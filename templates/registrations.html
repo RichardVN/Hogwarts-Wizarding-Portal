@@ -1,111 +1,149 @@
-{% extends 'base.html' %}
-{% set active_page = 'registrations' %}
-{% block title %} Professors Page {% endblock %}
-{% block pageheader %}Student Registration{% endblock %}
+{% extends 'base.html' %} {% set active_page = 'registrations' %} {% block title
+%} Professors Page {% endblock %} {% block pageheader %}Student Registration{%
+endblock %} {% block content %}
+<div class="row justify-content-center my-2">
+    <div class="col-md-6">
+        <!-- form card login -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Register a Student for a Class</h3>
+            </div>
+            <div class="card-body">
+                <form action="/registrations" method="post" class="addform">
+                    <div class="form-group">
+                        <label for="student_id">*Student:</label>
+                        <select
+                            class="form-control"
+                            id="student_id"
+                            name="student_id"
+                            required
+                        >
+                            <option value="" disabled selected
+                                >(Select a Student)</option
+                            >
+                            {% if students %} {% for student in students%}
+                            <option value="{{student.id}}"
+                                >{{student.last_name}},
+                                {{student.first_name}}</option
+                            >
+                            {% endfor %} {% else %}
+                            <option selected disabled value=""
+                                >No Students Available</option
+                            >
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course_id">*Class:</label>
+                        <select
+                            class="form-control"
+                            id="course_id"
+                            name="course_id"
+                            required
+                        >
+                            <option value="" disabled selected
+                                >(Select a Class)</option
+                            >
+                            {% if courses %} {% for course in courses%}
+                            <option value="{{course.id}}"
+                                >{{course.name}}</option
+                            >
+                            {% endfor %} {% else %}
+                            <option selected disabled value=""
+                                >No Courses Available</option
+                            >
+                            {% endif %}
+                        </select>
+                    </div>
 
-{% block content %}
-
-<form action='/registrations' method="post" class=addform>
-   <fieldset>
-      <legend>Add a Class for a Student</legend>
-
-      <fieldset>
-         <label for="student_id">*Student:</label>
-         <select id="student_id" name="student_id" required>
-            <option value="" disabled selected>(Select a Student)</option>
-            {% if students %}
-            {% for student in students%}
-            <option value={{student.id}}>{{student.last_name}}, {{student.first_name}}</option>
-            {% endfor %}
-            {% else %}
-            <option selected disabled value="">No Students Available</option>
-            {% endif %}
-         </select>
-      </fieldset>
-      <br />
-
-      <fieldset>
-         <label for="course_id">*Class:</label>
-         <select id="course_id" name="course_id" required>
-            <option value="" disabled selected>(Select a Class)</option>
-            {% if courses %}
-            {% for course in courses%}
-            <option value={{course.id}}>{{course.name}}</option>
-            {% endfor %}
-            {% else %}
-            <option selected disabled value="">No Courses Available</option>
-            {% endif %}
-         </select>
-      </fieldset>
-      <br />
-      <p> <i>* Indicates a Required Field </i> </p>
-      <input type="hidden" value="add" name="post_type">
-      <input type="submit" value="Submit">
-   </fieldset>
-</form>
-<br />
-
+                    <input type="hidden" value="add" name="post_type" />
+                    <button
+                        type="submit"
+                        class="btn btn-success btn-lg float-right"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Table populated from database using SELECT -->
-<table>
-   <caption></caption>
-   <thead>
-      <tr>
-         <th><b>Student ID</b></th>
-         <th><b>Last Name</b></th>
-         <th><b>First Name</b></th>
-         <th><b>Class ID</b></th>
-         <th><b>Class</b></th>
-         <th><b>Modify</b></th>
-      </tr>
-   </thead>
-   <tbody>
-      {% for student, course in students_courses %}
-      <tr>
-         <td>{{ student.id }}</td>
-         <td>{{ student.last_name }}</td>
-         <td>{{ student.first_name }}</td>
-         <td>{{ course.id }}</td>
-         <td>{{ course.name }}</td>
-         <td>
-            <form action="/registrations" method="post">
-               <input type="hidden" value={{student.id}} name="student_id">
-               <input type="hidden" value={{course.id}} name="class_id">
-               <input type="hidden" value="delete" name="post_type">
-               <input type="submit" value="Delete" />
-            </form>
-         </td>
-      </tr>
-      {% endfor %}
-
-   </tbody>
-</table>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th> Student ID </th>
+                    <th> Last Name </th>
+                    <th> First Name </th>
+                    <th> Class ID </th>
+                    <th> Class </th>
+                    <th>  </th>
+                </tr>
+            </thead >
+            <tbody>
+                {% for student, course in students_courses %}
+                <tr>
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.last_name }}</td>
+                    <td>{{ student.first_name }}</td>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>
+                        <form action="/registrations" method="post">
+                            <input
+                                type="hidden"
+                                value="{{student.id}}"
+                                name="student_id"
+                            />
+                            <input
+                                type="hidden"
+                                value="{{course.id}}"
+                                name="class_id"
+                            />
+                            <input
+                                type="hidden"
+                                value="delete"
+                                name="post_type"
+                            />
+           			 		<button type="submit" class="btn btn-danger">Delete</button>
+							
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <!-- search for student POST form -->
 <!-- <form action='/Registrations' method="post" class="addform">
-   <fieldset>
+   
       <legend>Search Filter: Lookup Student's Registration</legend>
 
-      <fieldset>
+      
          <label>*First Name:
             <input type="text" name="first_name_search" size="30" maxlength="100" required>
          </label>
-         <br />
-      </fieldset>
-      <br />
+         
+      
+      
 
-      <fieldset>
+      
          <label>*Last Name:
             <input type="text" name="last_name_search" size="30" maxlength="100" required>
          </label>
-         <br />
-      </fieldset>
-      <br />
+         
+      
+      
       <p> <i>* Indicates a Required Field </i> </p>
       <input type="hidden" value="search" name="post_type">
       <input type="submit" value="Submit Search Information" />
       <td><button onclick=window.location.href="/Registrations"> Undo Filter</button></td>
-   </fieldset>
+   
 </form> -->
 
 {%endblock%}

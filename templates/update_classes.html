@@ -1,44 +1,137 @@
-{% extends 'base.html' %}
-{% set active_page = 'classes' %}
-{% block title %}Update Class{% endblock%}
-{% block pageheader %} Update Class {% endblock %}
+{% extends 'base.html' %} {% set active_page = 'classes' %} {% block title
+%}Update Class{% endblock%} {% block pageheader %} Update Class {% endblock %}
 {%block content%}
-<form class="edit" action='/update-class/{{ course.id }}' method="post">
-   <fieldset>
-      <legend>Update Class Data</legend>
-      <fieldset>
-         <label>*Class Name:
-            <input type="text" name="name" size="30" maxlength="100" value='{{ course.name }}' required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label>*Class Credits:
-            <input type="number" name="credit" size="30" maxlength="100" value='{{ course.credit }}' required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label for="professor_id">*Professor:</label>
-         <select id="professor_id" name="professor_id" required>
-            {% if professors %}
-            {% for professor in professors%}
-            {% if professor.id == course.professor_id %}
-            <option selected value={{professor.id}}>{{professor.first_name}} {{professor.last_name}}</option>
-            {% else %}
-            <option value={{professor.id}}>{{professor.first_name}} {{professor.last_name}}</option>
-            {% endif %}
-            {% endfor %}
-            {% else %}
-            <option selected disabled value="">No Professors Available</option>
-            {% endif %}
-         </select>
-      </fieldset>
-      <br />
-      <button type="submit" value="Submit">Submit</button>
-   </fieldset>
+<div class="row justify-content-center my-2">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Update Class</h3>
+            </div>
+            <div class="card-body">
+                <form
+                    class="edit"
+                    action="/update-class/{{ course.id }}"
+                    method="post"
+                >
+                    <div class="form-group">
+                        <label for="">Class Name</label>
+                        <input
+                            value="{{ course.name }}"
+                            class="form-control"
+                            type="text"
+                            name="name"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="">Class Credits</label>
+                        <input
+                            class="form-control"
+                            value="{{ course.credit }}"
+                            type="number"
+                            name="credit"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="professor_id">Professor:</label>
+                        <select
+                            class="form-control"
+                            id="professor_id"
+                            name="professor_id"
+                            required
+                        >
+                            {% if professors %} {% for professor in professors%}
+                            {% if professor.id == course.professor_id %}
+                            <option selected value="{{professor.id}}"
+                                >{{professor.first_name}}
+                                {{professor.last_name}}</option
+                            >
+                            {% else %}
+                            <option value="{{professor.id}}"
+                                >{{professor.first_name}}
+                                {{professor.last_name}}</option
+                            >
+                            {% endif %} {% endfor %} {% else %}
+                            <option selected disabled value=""
+                                >No Professors Available</option
+                            >
+                            {% endif %}
+                        </select>
+                    </div>
+                    <button
+                        class="btn btn-success btn-lg float-right"
+                        type="submit"
+                    >
+                        Update
+                    </button>
+                    <button
+                        class="btn btn-danger btn-lg float-right mr-2"
+                        onclick="window.location.href='/classes';"
+                    >
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="edit" action="/update-class/{{ course.id }}" method="post">
+    <fieldset>
+        <legend>Update Class Data</legend>
+        <fieldset>
+            <label
+                >*Class Name:
+                <input
+                    type="text"
+                    name="name"
+                    size="30"
+                    maxlength="100"
+                    value="{{ course.name }}"
+                    required
+                />
+            </label>
+            <br />
+        </fieldset>
+        <br />
+        <fieldset>
+            <label
+                >*Class Credits:
+                <input
+                    type="number"
+                    name="credit"
+                    size="30"
+                    maxlength="100"
+                    value="{{ course.credit }}"
+                    required
+                />
+            </label>
+            <br />
+        </fieldset>
+        <br />
+        <fieldset>
+            <label for="professor_id">*Professor:</label>
+            <select id="professor_id" name="professor_id" required>
+                {% if professors %} {% for professor in professors%} {% if
+                professor.id == course.professor_id %}
+                <option selected value="{{professor.id}}"
+                    >{{professor.first_name}} {{professor.last_name}}</option
+                >
+                {% else %}
+                <option value="{{professor.id}}"
+                    >{{professor.first_name}} {{professor.last_name}}</option
+                >
+                {% endif %} {% endfor %} {% else %}
+                <option selected disabled value=""
+                    >No Professors Available</option
+                >
+                {% endif %}
+            </select>
+        </fieldset>
+        <br />
+        <button type="submit" value="Submit">Submit</button>
+    </fieldset>
 </form>
 
 {% endblock %}
