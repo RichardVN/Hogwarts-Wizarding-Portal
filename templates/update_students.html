@@ -9,7 +9,7 @@
       <!-- form card login -->
       <div class="card ">
             <div class="card-header">
-               <h3 class="mb-0">Update a Student</h3>
+               <h3 class="mb-0">Update Student</h3>
             </div>
             <div class="card-body">
                <form action='/update-student/{{ student.id }}' method="post" class="edit">
@@ -26,7 +26,7 @@
                      <input class="form-control" type="date" name="birthdate" value='{{ student.birthdate }}' size="30" maxlength="100" required>
                   </div>
                   <div class="form-group">
-                     <label for="year">*Student Year:</label>
+                     <label for="year">Student Year:</label>
                      <select class="form-control" id="year" name="year" required>
                         <option value="" disabled selected>--</option>
                         <option value="1">1</option>
@@ -39,7 +39,7 @@
                      </select>
                   </div>
                   <div class="form-group">
-                     <label for="house_id">*House:</label>
+                     <label for="house_id">House:</label>
                      <select class="form-control" id="house" name="house_id" required>
                         <option value="" disabled selected>(Select a House)</option>
                         {% if houses %}
@@ -53,6 +53,7 @@
                   </div>
                   <input type="hidden" value="add" name="post_type">
                   <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
+                  <button class="btn btn-danger btn-lg float-right mr-2" onclick="window.location.href='/students';">Cancel</button>
 
                </form>
             </div>

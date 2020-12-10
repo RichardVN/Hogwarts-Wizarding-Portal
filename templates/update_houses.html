@@ -12,7 +12,7 @@
             <!-- form card login -->
             <div class="card ">
                 <div class="card-header">
-                    <h3 class="mb-0">Add a New House</h3>
+                    <h3 class="mb-0">Update House</h3>
                 </div>
                 <div class="card-body">
                     <form class="edit" action='/update-house/{{ house.id }}' method="post">
@@ -41,6 +41,8 @@
 
 
                         <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
+                        <button class="btn btn-danger btn-lg float-right mr-2" onclick="window.location.href='/students';">Cancel</button>
+
                     </form>
                 </div>
                 <!--/card-block-->

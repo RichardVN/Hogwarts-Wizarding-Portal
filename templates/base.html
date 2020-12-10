@@ -10,11 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block stylesheet %}
-    <!--My Stylesheet-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen" />
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--My Stylesheet-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}" media="screen"/>
+
     {% endblock %}
 
     <title>{% block title %}DEFAULT TITLE{% endblock %}</title>
@@ -23,7 +25,7 @@
 <body>
     {% block header %}
         {% block navbar %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">HWP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -50,7 +52,7 @@
         </nav>
         {% endblock %}
 
-        <h1 class="display-3">
+        <h1 class="display-4">
                 <center>{% block pageheader %}{% endblock %}</center>
         </h1>
     {% endblock %}
