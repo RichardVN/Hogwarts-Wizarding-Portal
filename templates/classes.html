@@ -1,79 +1,116 @@
-{% extends 'base.html' %}
-{% set active_page = 'classes' %}
-{% block title %}Classes{% endblock%}
-{% block pageheader %}Classes Page{% endblock %}
-{% block content %}
-<form action='/classes' method="post" class=addform>
-   <fieldset>
-      <legend>Add New Course Entry</legend>
-
-      <fieldset>
-         <label>*Class Name:
-            <input type="text" name="name" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-
-      <fieldset>
-         <label>*Class Credits:
-            <input type="number" name="credit" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label for="professor_id">*Professor:</label>
-         <select id="professor_id" name="professor_id" required>
-            <option value="" disabled selected>(Select Professor)</option>
-            {% if professors %}
-            {% for professor in professors%}
-            <option value={{professor.id}}>{{professor.first_name}} {{professor.last_name}}</option>
-            {% endfor %}
-            {% else %}
-            <option selected disabled value="">No Professors Available</option>
-            {% endif %}
-         </select>
-      </fieldset>
-      <p> <i>* Indicates a Required Field </i> </p>
-      <input type="hidden" value="add" name="post_type">
-      <input type="submit" value="Submit">
-   </fieldset>
-</form>
-<br />
-
-
+{% extends 'base.html' %} {% set active_page = 'classes' %} {% block title
+%}Classes{% endblock%} {% block pageheader %}Classes Page{% endblock %} {% block
+content %}
+<div class="row justify-content-center my-2">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Add a Class</h3>
+            </div>
+            <div class="card-body">
+                <form action="/classes" method="post" class="addform">
+                    <div class="form-group">
+                        <label for="">Class Name</label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="name"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="">Class Credits</label>
+                        <input
+                            class="form-control"
+                            type="number"
+                            name="credit"
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="professor_id">Professor:</label>
+                        <select
+                            class="form-control"
+                            id="professor_id"
+                            name="professor_id"
+                            required
+                        >
+                            <option value="" disabled selected
+                                >(Select Professor)</option
+                            >
+                            {% if professors %} {% for professor in professors%}
+                            <option value="{{professor.id}}"
+                                >{{professor.first_name}}
+                                {{professor.last_name}}</option
+                            >
+                            {% endfor %} {% else %}
+                            <option selected disabled value=""
+                                >No Professors Available</option
+                            >
+                            {% endif %}
+                        </select>
+                    </div>
+                    <input type="hidden" value="add" name="post_type" />
+                    <button
+                        type="submit"
+                        class="btn btn-success btn-lg float-right"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Table populated from database using SELECT -->
-<table>
-   <caption></caption>
-   <thead>
-      <tr>
-         <th><b>Class ID</b></th>
-         <th><b>Class Name</b></th>
-         <th><b>Credits</b></th>
-         <th><b>Professor</b></th>
-         <th colspan="2"><b>Modify</b></th>
-      </tr>
-   </thead>
-   <tbody>
-      {% for course in courses %}
-      <tr>
-         <td>{{ course.id }}</td>
-         <td>{{ course.name }}</td>
-         <td>{{ course.credit }}</td>
-         <td>{{ course_professors.pop(0) }}</td>
-         <td><button onclick=window.location.href="/update-class/{{ course.id }}">Update</button></td>
-         <td>
-            <form action="/classes" method="post">
-               <input type="hidden" value={{course.id}} name="delete_id">
-               <input type="hidden" value="delete" name="post_type">
-               <input type="submit" value="Delete" />
-            </form>
-         </td>
-      </tr>
-      {% endfor %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th><b>Class ID</b></th>
+                    <th><b>Class Name</b></th>
+                    <th><b>Credits</b></th>
+                    <th><b>Professor</b></th>
+                    <th colspan="2"><b>Modify</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.credit }}</td>
+                    <td>{{ course_professors.pop(0) }}</td>
+                    <td>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="window.location.href='/update-class/{{ course.id }}';"
+                        >
+                            Update
+                        </button>
+                    </td>
+                    <td>
+                        <form action="/classes" method="post">
+                            <input
+                                type="hidden"
+                                value="{{course.id}}"
+                                name="delete_id"
+                            />
+                            <input
+                                type="hidden"
+                                value="delete"
+                                name="post_type"
+                            />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-   </tbody>
-</table>
 {% endblock %}
