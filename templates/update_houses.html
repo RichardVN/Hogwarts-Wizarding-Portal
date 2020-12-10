@@ -1,48 +1,52 @@
 {% extends 'base.html' %}
 {% set active_page = 'houses' %}
-{% block title %}Update House{% endblock%}
-{% block pageheader %} Update House {% endblock %}
-{%block content%}
+{% block title %}Update House
+{% endblock %}
+{% block pageheader %}
+    Update House
+{% endblock %}
+{% block content %}
+    <div class="row justify-content-center my-2">
+        <div
+            class="col-md-6">
+            <!-- form card login -->
+            <div class="card ">
+                <div class="card-header">
+                    <h3 class="mb-0">Add a New House</h3>
+                </div>
+                <div class="card-body">
+                    <form class="edit" action='/update-house/{{ house.id }}' method="post">
 
-<body>
-    <form class="edit" action='/update-house/{{ house.id }}' method="post">
-        <fieldset>
-            <legend>Update House Data</legend>
+                        <div class="form-group">
+                            <label for="">House Name</label>
+                            <input class="form-control" type="text" name="name" value={{ house.name }} required></input>
+                        </div>
 
-            <fieldset>
-                <legend>Add New House</legend>
 
-                <fieldset>
-                    <label>*House Name:
-                        <input type="text" name="name" value={{house.name}} size="30" maxlength="100" required>
-                    </label>
-                    <br />
-                </fieldset>
-                <br />
+                        <div class="form-group">
+                            <label for="">House Mascot</label>
+                            <input class="form-control" type="text" name="mascot" value={{ house.mascot }} required></input>
+                        </div>
 
-                <fieldset>
-                    <label>*House Mascot:
-                        <input type="text" name="mascot" value = {{house.mascot}} size="30" maxlength="100" required>
-                    </label>
-                    <br />
-                </fieldset>
-                <br />
-                <fieldset>
-                    <label>*House Founder:
-                        <input type="text" name="founder" value={{house.founder}} size="30" maxlength="100" required>
-                    </label>
-                    <br />
-                </fieldset>
-                <br />
-                <fieldset>
-                    <label>*House Head:
-                        <input type="text" name="head" value={{house.head}} size="30" maxlength="100" required>
-                    </label>
-                    <br />
-                </fieldset>
-                <br />
-                <p> <i>* Indicates a Required Field </i> </p>
-                <input type="submit" value="Submit">
-            </fieldset>
-    </form>
-    {% endblock %}
+
+                        <div class="form-group">
+                            <label for="">House Founder</label>
+                            <input class="form-control" type="text" name="founder" value={{ house.founder }} required></input>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">House Head</label>
+                            <input class="form-control" type="text" name="head" value={{ house.head }} required></input>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-success btn-lg float-right">Update</button>
+                    </form>
+                </div>
+                <!--/card-block-->
+            </div>
+            <!-- /form card login -->
+        </div>
+    </div>
+
+{% endblock %}

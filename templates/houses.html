@@ -1,129 +1,85 @@
 {% extends 'base.html' %}
 {% set active_page = 'houses' %}
 {% block title %}Houses{% endblock%}
-{% block pageheader %} Hogwarts Houses {% endblock %}
+{% block pageheader %} Houses {% endblock %}
 {%block content%}
 
-<form action='/houses' method="post" class=addform>
-   <fieldset>
-      <legend>Add New House</legend>
+<div class="row justify-content-center my-2">
+   <div class="col-md-6">
+      <!-- form card login -->
+      <div class="card ">
+            <div class="card-header">
+               <h3 class="mb-0">Add a New House</h3>
+            </div>
+            <div class="card-body">
+               <form action='/houses' method="post" class="addform">
+                  <div class="form-group">
+                     <label for="">House Name</label>
+                     <input class="form-control" type="text" name="name" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="">House Mascot</label>
+                      <input class="form-control" type="text" name="mascot" required>
 
-      <fieldset>
-         <label>*House Name:
-            <input type="text" name="name" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
+                  </div>
+                  <div class="form-group">
+                     <label for="">House Founder</label>
+                     <input class="form-control" type="text" name="founder" required>
 
-      <fieldset>
-         <label>*House Mascot:
-            <input type="text" name="mascot" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label>*House Founder:
-            <input type="text" name="founder" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <fieldset>
-         <label>*House Head:
-            <input type="text" name="head" size="30" maxlength="100" required>
-         </label>
-         <br />
-      </fieldset>
-      <br />
-      <p> <i>* Indicates a Required Field </i> </p>
-      <input type="hidden" value="add" name="post_type">
-      <input type="submit" value="Submit">
-   </fieldset>
-</form>
-<br />
+                  </div>
+                  <div class="form-group">
+                     <label for="">House Head</label>
+                    <input class="form-control" type="text" name="head" required>
 
-<!--       <table>
-         <caption></caption>
-         <thead>
+                  </div>
+                  <input type="hidden" value="add" name="post_type">
+                  <button type="submit" class="btn btn-success btn-lg float-right">Submit</button>
+               </form>
+            </div>
+            <!--/card-block-->
+         </div>
+         <!-- /form card login -->
+   </div>
+</div>
+
+
+<!-- Table populated from database using SELECT -->
+<div class="row justify-content-center mt-5">
+   <div class="col-md-10">
+      <table class="table table-hover">
+         <thead class="thead-dark">
             <tr>
-               <th><b>House </b></th>
-               <th><b>Mascot</b></th>
-               <th><b>Founder</b></th>
-               <th><b>Head</b></th>
-               <th colspan="2"><b>Modify</b></th>
+               <th>House</th>
+               <th>Mascot</th>
+               <th>Founder</th>
+               <th>Head</th>
+               <th colspan="2"></th>
             </tr>
          </thead>
          <tbody>
+            {% for house in houses %}
             <tr>
-               <td>Gryffindor</td>
-               <td>Lion</td>
-               <td>Godric Gryffindor</td>
-               <td>Minerva McGonagall</td>
-               <td><button onclick="window.location.href = 'update_houses';">Edit</button></td>
-               <td><button onclick="window.location.href = 'houses';">Delete</button></td>
+               <td>{{ house.name }}</td>
+               <td>{{ house.mascot }}</td>
+               <td>{{ house.founder }}</td>
+               <td>{{ house.head }}</td>
+               <td>
+                  <button class="btn btn-secondary" onclick="window.location.href='/update-house/{{ house.id }}';">Update</button>
+               </td>
+               <td>
+                  <form action="/houses" method="post">
+                     <input type="hidden" value={{ house.id }} name="delete_id">
+                     <input type="hidden" value="delete" name="post_type">
+                     <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+               </td>
             </tr>
-            <tr>
-               <td>Slytherin</td>
-               <td>Serpent</td>
-               <td>Remus Lupin</td>
-               <td>Severus Snape</td>
-               <td><button onclick="window.location.href = 'update_houses';">Edit</button></td>
-               <td><button onclick="window.location.href = 'houses';">Delete</button></td>
-            </tr>
-            <tr>
-               <td>Hufflepuff</td>
-               <td>Badger</td>
-               <td>Helga Hufflepuff</td>
-               <td>Pomona Sprout</td>
-               <td><button onclick="window.location.href = 'update_houses';">Edit</button></td>
-               <td><button onclick="window.location.href = 'houses';">Delete</button></td>
-            </tr>
-            <tr>
-               <td>Ravenclaw</td>
-               <td>Eagle</td>
-               <td>Rowena Ravenclaw</td>
-               <td>Filius Flitwick</td>
-               <td><button onclick="window.location.href = 'update_houses';">Edit</button></td>
-               <td><button onclick="window.location.href = 'houses';">Delete</button></td>
-            </tr>
-
-      
+            {% endfor %}
          </tbody>
-      </table> -->
+      </table>
+   </div>
+</div>
 
-<!-- Table populated from database using SELECT -->
-<table>
-   <caption></caption>
-   <thead>
-      <tr>
-         <th><b>House </b></th>
-         <th><b>Mascot</b></th>
-         <th><b>Founder</b></th>
-         <th><b>Head</b></th>
-         <th colspan="2"><b>Modify</b></th>
-      </tr>
-   </thead>
-   <tbody>
-      {% for house in houses %}
-      <tr>
-         <td>{{ house.name }}</td>
-         <td>{{ house.mascot }}</td>
-         <td>{{ house.founder }}</td>
-         <td>{{ house.head }}</td>
-         <td><button onclick=window.location.href="/update-house/{{ house.id }}">Update</button></td>
-         <td>
-            <form action="/houses" method="post">
-               <input type="hidden" value={{house.id}} name="delete_id">
-               <input type="hidden" value="delete" name="post_type">
-               <input type="submit" value="Delete" />
-            </form>
-         </td>
-      </tr>
-      {% endfor %}
-
-   </tbody>
-</table>
 
 {% endblock %}
+<!-- end content -->
