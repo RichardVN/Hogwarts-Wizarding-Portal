@@ -33,7 +33,7 @@
     <body>
         {% block header %} {% block navbar %}
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">HWP</a>
+            <a class="navbar-brand" href="{{url_for('home')}}">HWP</a>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -91,10 +91,12 @@
         </nav>
         {% endblock %}
 
+        
         <h1 class="display-4">
             <center>{% block pageheader %}{% endblock %}</center>
         </h1>
         {% endblock %}
+
 
         <div id="content">{% block content %} {% endblock %}</div>
         <div id="footer">{% block footer %}{% endblock %}</div>
