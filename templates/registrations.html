@@ -11,7 +11,7 @@ endblock %} {% block content %}
             <div class="card-body">
                 <form action="/registrations" method="post" class="addform">
                     <div class="form-group">
-                        <label for="student_id">*Student:</label>
+                        <label for="student_id">Student:</label>
                         <select
                             class="form-control"
                             id="student_id"
@@ -34,7 +34,7 @@ endblock %} {% block content %}
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="course_id">*Class:</label>
+                        <label for="course_id">Class:</label>
                         <select
                             class="form-control"
                             id="course_id"
@@ -118,32 +118,5 @@ endblock %} {% block content %}
         </table>
     </div>
 </div>
-
-<!-- search for student POST form -->
-<!-- <form action='/Registrations' method="post" class="addform">
-   
-      <legend>Search Filter: Lookup Student's Registration</legend>
-
-      
-         <label>*First Name:
-            <input type="text" name="first_name_search" size="30" maxlength="100" required>
-         </label>
-         
-      
-      
-
-      
-         <label>*Last Name:
-            <input type="text" name="last_name_search" size="30" maxlength="100" required>
-         </label>
-         
-      
-      
-      <p> <i>* Indicates a Required Field </i> </p>
-      <input type="hidden" value="search" name="post_type">
-      <input type="submit" value="Submit Search Information" />
-      <td><button onclick=window.location.href="/Registrations"> Undo Filter</button></td>
-   
-</form> -->
 
 {%endblock%}
