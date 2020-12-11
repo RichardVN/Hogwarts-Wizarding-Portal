@@ -70,11 +70,11 @@ class Professors(db.Model):
 
 # Many to Many relationship table
 registration_table = db.Table('StudentsClasses', db.Model.metadata,
-                              db.Column('student_id', db.Integer,
+                            db.Column('student_id', db.Integer,
                                         db.ForeignKey('students.id', ondelete='CASCADE')),
-                              db.Column('class_id', db.Integer,
+                            db.Column('class_id', db.Integer,
                                         db.ForeignKey('classes.id', ondelete='CASCADE'))
-                              )
+                            )
 
 
 class Students(db.Model):
@@ -99,9 +99,9 @@ class Classes(db.Model):
 
 # route decorator tells Flask what URL should trigger our function. Just calling a website with url is a GET request.
 @app.route('/')
-def hi():              # function given a name, which is used to generate URLs for that function (url_for(hi))
+def home():              # function given a name, which is used to generate URLs for that function (url_for(hi))
     # return ("string")  OR render_template("page.html"), belonging in templates folder
-    return redirect('/students')
+    return render_template('home.html')
 
 
 @app.route('/students', methods=['POST', 'GET'])
