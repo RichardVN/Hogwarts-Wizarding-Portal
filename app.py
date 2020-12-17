@@ -27,7 +27,7 @@ def get_env_variable(name):
 
 
 # Dev environment?
-ENV = 'dev'
+ENV = 'prod'
 
 # Config DB URI of localhost or heroku server
 if ENV == 'dev':
@@ -44,7 +44,7 @@ if ENV == 'dev':
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = get_env_variable(
-        "PRODUCTION_POSTGRES_URI")
+        "DATABASE_URL")
 
 # Silence deprecation warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
