@@ -6,8 +6,10 @@ https://witchcraft-school-admin.herokuapp.com/
 ### Disclaimer
 (This website is not endorsed or supported directly or indirectly with Warner Bros. Entertainment, JK Rowling, Pottermore, or any of the official Harry Potter trademark/right holders. It is used purely for non-commercial purposes only.)
 ## Techonologies Used:
-Frontend: CSS3, HTML5, Javascript, Jinja2, Bootstrap4
+Frontend: CSS3, HTML5, Javascript, Jinja2, Bootstrap
+
 Backend: Python(Flask), SQLAlchemy ORM
+
 Database: PostgreSQL
 ## Features
 - Full CRUD (Create, Read, Update, Delete) for Professors, Students, Classes, and Houses entities.
